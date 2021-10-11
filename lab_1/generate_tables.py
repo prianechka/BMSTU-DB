@@ -44,13 +44,19 @@ def generate_school():
     school_list = text.split("\r\n")
     return school_list
 
+def generate_passport():
+    result = ""
+    for i in range(10):
+        result += str(randint(0, 9))
+    return result
+
 def generate_person():
     fake = Faker('ru_RU')
     fake.add_provider(person)
     fake.add_provider(date_time)
     fake.add_provider(company)
     sex = choice(['М', 'Ж'])
-    number = ''.join((list(np.random.choice(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], size = 10))))
+    number = generate_passport()
     if (sex == 'М'):
         name = fake.first_name_male()
         last_name = fake.last_name_male()
@@ -226,10 +232,10 @@ table_crash = generate_table_of_crash()
 table_autos = generate_table_of_cars()
 table_details = generate_table_of_details(table_persons, table_autos, table_crash)
 
-table_persons.to_csv("table_drivers.csv", sep=",")
-table_autos.to_csv("table_cars.csv", sep=",")
-table_crash.to_csv("table_crash.csv", sep = ",")
-table_details.to_csv("table_details.csv", sep=",")
+table_persons.to_csv("table_drivers.csv", sep=",", index = False)
+table_autos.to_csv("table_cars.csv", sep=",", index = False)
+table_crash.to_csv("table_crash.csv", sep = ",", index = False)
+table_details.to_csv("table_details.csv", sep=",", index = False)
 
 table_regions = generate_regions()
-table_regions.to_csv("table_regions.csv", sep = ",")
+table_regions.to_csv("table_regions.csv", sep = ",", index = False)
