@@ -22,11 +22,20 @@ TABLE_LETTERS = ["А", "В", "Е", "К", "М", "Н", "О", "Р", "С", "Т", "У
 TABLE_COLORS = ["белый", "чёрный", "серый", "синий", "пурпурный"]
 
 def generate_regions():
-    region_data = pd.read_csv("inc/region.csv", sep = ",")[["name", "type", "name_with_type", "federal_district", "kladr_id", "timezone"]]
+    region_data = pd.read_csv("region.csv", sep = ",")[["name", "type", "name_with_type", "federal_district", "kladr_id", "timezone"]]
     region_data["kladr_id"] //= 100000000000
     region_data["name_with_type"] = region_data["name_with_type"].str.replace("Респ", "Республика")
     region_data["name_with_type"] = region_data["name_with_type"].str.replace("обл", "область")
     region_data["name_with_type"] = region_data["name_with_type"].str.replace("г ", "")
+
+    region_data["type"] = region_data["type"].str.replace("Респ", "Республика")
+    region_data["type"] = region_data["type"].str.replace("обл", "область")
+    region_data["type"] = region_data["type"].str.replace("г ", "")
+
+    region_data["timezone"] = region_data["timezone"].apply(lambda x: x[4:]).astype(int)
+
+    region_data = region_data[["kladr_id", "name", "type", "name_with_type", "federal_district", "timezone"]]
+    region_data.columns = ["region_id", "name", "region_type", "full_name", "federal_district", "timezone"]
     return region_data
 
 def generate_school():
@@ -53,21 +62,30 @@ def generate_person():
     date_of_birth = fake.date_of_birth(minimum_age = 18, maximum_age = 70)
     age = 2021 - date_of_birth.year
     year = date_of_birth.year + randint(18, age)
-    KP = choice(["А", "M"])
+    KP = choice(["автомат", "механика"])
     try_value = randint(1, 5)
     return number, last_name, name, middle_name, date_of_birth, sex, year, KP, try_value
 
 def generate_table_of_persons():
     region_data = generate_regions()
     school_list = generate_school()
-    table = pd.DataFrame(columns=["Номер паспорта", "Фамилия", "Имя", "Отчество", "Дата рождения", "Пол", "Год получения прав", "КП во время учёбы", 
-                              "Количество попыток сдачи эказмена", "Название автошколы","Код региона получения прав"])
+    table = pd.DataFrame(columns=["driver_id", "passport_id", "surname", "name", "middle_name", "date_of_birth", 
+                                  "sex", "year_of_get_license", "study_transmission", 
+                              "attemps_of_pass", "autoschool", "region_id"])
     for i in range(20000):
         number, last_name, name, middle_name, date_of_birth, sex, year, KP, try_value = generate_person()
-        region = region_data.loc[randint(0, 85)]["kladr_id"]
+        region = region_data.loc[randint(0, 85)]["region_id"]
         name_school = choice(school_list)
-        table.loc[i] = [number, last_name, name, middle_name, date_of_birth, sex, year, KP, try_value, name_school, region]
+        table.loc[i] = [i + 1, number, last_name, name, middle_name, date_of_birth, sex, int(year), KP, int(try_value), name_school, region]
     return table
+
+def get_price(price):
+    array = price.split()
+    if array[-1] == '₽':
+        array = array[:len(array) - 1]
+    if array[0] in ["от", "до"]:
+        array = array[1:]
+    return int(''.join(array))
 
 def generate_cars():
     main_url = "https://auto.ru/moskva/cars/all/"
@@ -79,43 +97,48 @@ def generate_cars():
         soup = bs4.BeautifulSoup(html,'html.parser')
         name_auto = soup.findAll(lambda tag: tag.name == "h3")
         auto = soup.findAll(lambda tag: tag.name == 'div' and tag.get('class') == ["ListingItemTechSummaryDesktop__cell"])
+        price = soup.findAll(lambda tag: tag.name == 'div' and tag.get('class') == ["ListingItemPrice__content"])
         N = len(auto)
         list_autos = []
         i = 0
         while (i + 5) < N:
             lst = []
-            lst.extend(unicodedata.normalize("NFKC", auto[i].text.strip()).split(" / "))
-            lst.append(unicodedata.normalize("NFKC", auto[i + 1].text))
-            lst.append(unicodedata.normalize("NFKC", auto[i + 2].text))
-            lst.append(unicodedata.normalize("NFKC", auto[i + 3].text))
-            lst.append(unicodedata.normalize("NFKC", auto[i + 4].text))
-            if (lst[len(lst) - 1] not in TABLE_COLORS):
-                lst[6] = choice(TABLE_COLORS)
-            lst[0] = str(lst[0].split()[0])
-            lst[1] = str(lst[1].split()[0])
-            lst[4] = str(lst[4].split()[0])
-            if ("опции" in unicodedata.normalize("NFKC", auto[i + 5].text) or
-                "опций" in unicodedata.normalize("NFKC", auto[i + 5].text) or
-                "опция" in unicodedata.normalize("NFKC", auto[i + 5].text)):
-                i += 1
-            i += 5
-            list_autos.append(lst)
+            if (unicodedata.normalize("NFKC", auto[i].text.strip()).split(" / ")[2] == "Электро"):
+              i += 5
+            else:
+              lst.extend(unicodedata.normalize("NFKC", auto[i].text.strip()).split(" / "))
+              lst.append(unicodedata.normalize("NFKC", auto[i + 1].text))
+              lst.append(unicodedata.normalize("NFKC", auto[i + 2].text))
+              lst.append(unicodedata.normalize("NFKC", auto[i + 3].text))
+              lst.append(unicodedata.normalize("NFKC", auto[i + 4].text))
+              if (lst[len(lst) - 1] not in TABLE_COLORS):
+                  lst[6] = choice(TABLE_COLORS)
+              lst[0] = str(lst[0].split()[0])
+              lst[1] = str(lst[1].split()[0])
+              lst[4] = str(lst[4].split()[0])
+              if ("опции" in unicodedata.normalize("NFKC", auto[i + 5].text) or
+                  "опций" in unicodedata.normalize("NFKC", auto[i + 5].text) or
+                  "опция" in unicodedata.normalize("NFKC", auto[i + 5].text)):
+                  i += 1
+              i += 5
+              list_autos.append(lst)
         for i in range(len(list_autos)):
             list_autos[i].append(name_auto[i].a.text)
             number = choice(TABLE_LETTERS) + str(randint(0, 9)) + str(randint(0, 9)) + str(randint(0, 9)) + choice(TABLE_LETTERS) + \
                      choice(TABLE_LETTERS) + "_" + str(randint(0, 9)) + str(randint(0, 9))
             list_autos[i].append(number)
+            list_autos[i].append(get_price(price[i].text))
         result.extend(list_autos)
     return result
 
 def generate_table_of_cars():
     auto = generate_cars()
-    print(len(auto))
-    date_cars = pd.DataFrame(columns=["Номер машины", "Название машины", "Тип машины", "Коробка передач", "Привод", "Мощность двигателя (в л.с.)", "Объём двигателя (в литрах)", 
-                                      "Тип топлива", "Цвет"])
+    date_cars = pd.DataFrame(columns=["car_id", "car_number", "car_model", "car_type", "transmission", "drive_unit", 
+                                      "engine_capacity", "engine_volume", 
+                                      "fuel_type", "car_color", "price"])
     for i in range(len(list(auto))):
         car = auto[i]
-        date_cars.loc[i] = [car[8], car[7], car[4], car[3], car[5], car[1], car[0], car[2], car[6]]
+        date_cars.loc[i] = [i + 1, car[8], car[7], car[4], car[3], car[5], int(car[1]), float(car[0]), car[2].lower(), car[6], car[9]]
     return date_cars
 
 def generate_crash():   
@@ -147,54 +170,66 @@ def generate_crash():
     return date, time, N, type_street, type_cover, temp, bright, water
 
 def generate_table_of_crash():
-    data_crash = pd.DataFrame(columns=["Дата", "Время", "Количество участников", "Тип дороги", "Тип покрытия дороги", "Температура воздуха", 
-                                        "Показатель освещённости", "Процент влажности дороги"])
+    data_crash = pd.DataFrame(columns=["accident_id", "accident_date", "accident_time", "number_members", 
+                                       "road_type", "road_cover_type", "temperature", 
+                                        "light_extent", "moisture_extent"])
     
-    for i in range(1000):
-        data_crash.loc[i] = generate_crash()
+    for i in range(1500):
+      date, time, N, type_street, type_cover, temp, bright, water = generate_crash()
+      data_crash.loc[i] = [i + 1, date, time,int(N), type_street, type_cover, int(temp), float(bright), float(water)]
     
     return data_crash
 
 def generate_table_of_details(persons, autos, crash):
-    details = pd.DataFrame(columns=["person_id", "auto_id", "crash_id", "Уровень алкоголя в крови", "Степень повреждённости машины", 
-                                    "Виновный в аварии", "Степень повреждений водителя", "Количество пассажиров"])
+    details = pd.DataFrame(columns=["id", "accident_id", "car_id", "driver_id", "alcohol_level", 
+                                    "is_blamed", "is_exited_crash", 
+                                    "driver_damage", "n_passengers"])
     N_person = persons.shape[0]
-    N_auto = persons.shape[1]
+    N_auto = autos.shape[0]
     for i in range(crash.shape[0]):
-        crash_id = i
-        N = crash.loc[i]["Количество участников"]
+        crash_id = i + 1
+        N = crash.loc[i]["number_members"]
         id = list(np.random.choice(range(N_person), size = N, replace= False))
         autos_id = list(np.random.choice(range(N_auto), size = N, replace= False))
         blame = choice(range(1, N + 1))
         for j in range(N):
-            person_id = persons.loc[id[j]]["Номер паспорта"]
-            auto_id = autos.loc[autos_id[j]]["Номер машины"]
+            person_id = persons.loc[id[j]]["driver_id"]
+            auto_id = autos.loc[autos_id[j]]["car_id"]
             rv = stats.norm(loc = 0, scale = 0.6)
             promile = abs(rv.rvs(size = 1)[0])
             if (promile < 0.15):
               promile = 0
             if (blame - 1 == j):
-                blame_id = 'Да'
+                is_blamed = True
             else:
-                blame_id = "Нет"
+                is_blamed = False
             N_pas = randint(0, 3)
-            rv1 = stats.norm(loc = 0, scale = 0.2)
-            car_extent = abs(rv.rvs(size = 1)[0])
-            person_extent = abs(rv.rvs(size = 1)[0])
-            if (car_extent > 1):
-              car_extent = randint(0, 1) / 100
-            if (person_extent > 1):
-              person_extent = randint(0, 1) / 100
-            details.loc[details.shape[0]] = [person_id, auto_id, crash_id, promile, car_extent, blame_id, person_extent, N_pas]
+            exited = randint(1, 20)
+            if (exited >= 17):
+              is_exited = True
+            else:
+              is_exited = False
+            
+            driver_damage = randint(1, 15)
+            if (driver_damage < 8):
+              driver_damage_extent = "Лёгкие"
+            elif (driver_damage < 14):
+              driver_damage_extent = "Средние"
+            else:
+              driver_damage_extent = "Тяжёлые"
+            details.loc[details.shape[0]] = [i + 1, crash_id, auto_id, person_id, float(promile), bool(is_blamed), 
+                                             bool(is_exited), driver_damage_extent,int(N_pas)]
     return details
 
-table_regions = generate_regions()
 table_persons = generate_table_of_persons()
-table_autos = generate_table_of_cars()
 table_crash = generate_table_of_crash()
+table_autos = generate_table_of_cars()
 table_details = generate_table_of_details(table_persons, table_autos, table_crash)
-table_details.to_csv("data/table_details.csv", sep=",")
-table_persons.to_csv("table_persons.csv", sep=",")
-table_autos.to_csv("table_autos.csv", sep=",")
+
+table_persons.to_csv("table_drivers.csv", sep=",")
+table_autos.to_csv("table_cars.csv", sep=",")
 table_crash.to_csv("table_crash.csv", sep = ",")
+table_details.to_csv("table_details.csv", sep=",")
+
+table_regions = generate_regions()
 table_regions.to_csv("table_regions.csv", sep = ",")
