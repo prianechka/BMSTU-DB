@@ -1,4 +1,4 @@
-DROP SCHEMA IF EXISTS lab CASCADE ;
+DROP SCHEMA IF EXISTS crash CASCADE ;
 
 CREATE SCHEMA crash
 
@@ -24,6 +24,7 @@ CREATE TABLE crash.Driver
 	study_transmission TEXT,
 	attemps_of_pass INT not null,
 	autoschool TEXT,
+	region_id INT not null,
 	FOREIGN KEY (region_id) references crash.Region(region_id) on delete cascade
 );
 CREATE TABLE crash.Car 
@@ -35,7 +36,7 @@ CREATE TABLE crash.Car
 	transmission TEXT,
 	drive_unit TEXT,
 	engine_capacity INT not null,
-	engine_volume DECIMAL(3, 5),
+	engine_volume DECIMAL(7, 5),
 	fuel_type TEXT,
 	car_color TEXT,
 	price INT not null
@@ -50,16 +51,19 @@ CREATE TABLE crash.Accident
 	road_type TEXT,
 	road_cover_type TEXT,
 	temperature INT,
-	light_extent DECIMAL(2, 5),
+	light_extent DECIMAL(7, 5),
 	moisture_extent INT
 );
 CREATE TABLE crash.Details
 (
 	id INT not null,
-	FOREIGN KEY (accident_id) references crash.Accident(accident_id) on delete cascade
-	FOREIGN KEY (car_id) references crash.Car(car_id) on delete cascade
-	FOREIGN KEY (driver_id) references crash.Driver(driver_id) on delete cascade
-	alcohol_level DECIMAL(2, 5),
+	accident_id INT not null,
+	car_id INT not null,
+	driver_id INT not null,
+	FOREIGN KEY (accident_id) references crash.Accident(accident_id) on delete cascade,
+	FOREIGN KEY (car_id) references crash.Car(car_id) on delete cascade,
+	FOREIGN KEY (driver_id) references crash.Driver(driver_id) on delete cascade,
+	alcohol_level DECIMAL(7, 5),
 	is_blamed BOOLEAN,
 	is_exited_crash BOOLEAN,
 	driver_damage TEXT,
