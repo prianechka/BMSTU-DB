@@ -16,7 +16,7 @@ ALTER TABLE crash.Driver
 
 --Car constraints
 ALTER TABLE crash.Car
-    ADD CONSTRAINT correct_engine CHECK (engine_capacity < 700 AND engine_capacity > 50);
+    ADD CONSTRAINT correct_engine CHECK (engine_capacity < 800 AND engine_capacity > 22);
 
 ALTER TABLE crash.Car 
     ADD CONSTRAINT correct_volume CHECK (engine_volume > 0.07 AND engine_volume < 10);
