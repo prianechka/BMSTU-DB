@@ -137,3 +137,119 @@ WHERE D.driver_id = (SELECT Dd.driver_id
                                               limit 1)
 order by Dd.date_of_birth
 limit 1)
+
+-- 14. Инструкция SELECT, консолидирующая данные с помощью предложения GROUP BY, но без предложения HAVING.
+-- Для каждого региона вывести количество виновных в авариях
+
+SELECT DISTINCT R.region_id, R.full_name, count(R.region_id)
+FROM crash.driver as D JOIN crash.region as R on (D.region_id = R.region_id)
+        JOIN crash.details as Dt on (D.driver_id = Dt.driver_id)
+GROUP BY R.region_id
+
+-- 15.Инструкция SELECT, консолидирующая данные с помощью предложения GROUP BY и предложения HAVING.
+-- Для автошкол с количеством участнков аварий > 30 вывести среднее опьянение водителей
+
+SELECT D.autoschool, count(D.autoschool), cast(round(avg(Dt.alcohol_level), 2) as numeric (5, 2))
+FROM crash.driver as D JOIN crash.details as Dt on (D.driver_id = Dt.driver_id)
+GROUP BY D.autoschool
+HAVING count(D.autoschool) > 30
+
+-- 16. Однострочная инструкция INSERT, выполняющая вставку в таблицу одной строки значение
+INSERT INTO crash.driver(driver_id, passport_id, surname, name, middle_name, date_of_birth, sex, year_of_get_license, study_transmission, attemps_of_pass, autoschool, region_id)
+VALUES (20001, '0415286283', 'Прянишников', 'Александр', 'Николаевич', '2001-05-28', 'М', 2020, 'механика', 1, 'Азбука вождения', 24)
+
+-- 17. Многострочная инструкция INSERT, выполняющая вставку в таблицу результирующего набора данных вложенного подзапроса.
+INSERT INTO crash.car(car_id, car_number, car_model, car_type, transmission, drive_unit, engine_capacity, engine_volume, fuel_type, car_color, price)
+SELECT 14894, (SELECT C.car_number
+               FROM crash.car as C
+               WHERE C.car_model like '%LADA%'
+               ORDER BY C.price DESC
+               limit 1), 'Volkswagen Passat B7', 'седан', 'автомат', 'передний', 162, 1.9, 'бензин', 'белый', 4200000;
+
+SELECT *
+FROM crash.car as C
+WHERE C.price = 4200000;
+
+-- 18. Простая инструкция UPDATE.
+-- Изменить значение цены для Лады из прошлого задания
+UPDATE crash.car as C
+SET price = 4200000
+WHERE car_number = 'С835ХВ_68';
+
+-- 19. Инструкция UPDATE со скалярным подзапросом в предложении SET.
+-- Изменить для всех пассатов цену на среднюю для всех мерседесов
+UPDATE crash.car
+SET price = (SELECT avg(Cc.price)
+            FROM crash.car as Cc
+            WHERE Cc.car_model like '%Mercedes%')
+WHERE car_model = 'Volkswagen Passat B7';
+
+-- 20. Простая инструкция DELETE.
+DELETE FROM crash.car
+WHERE price = 4200000;
+
+-- 21. Инструкция DELETE с вложенным коррелированным подзапросом в предложении WHERE.
+-- Удалить все машины, цена которых равна средней по мерседесам и являются пассатом
+
+DELETE FROM crash.car
+WHERE price = (SELECT avg(C.price)
+               FROM crash.car as C
+               WHERE C.car_model like '%Mercedec%') and car_model = 'Volkswagen Passat B7';
+
+-- 22. Инструкция SELECT, использующая простое обобщенное табличное выражение
+-- Вывести степень опьянения водителей, которые покинули аварию, а также дорогу аварии
+WITH MyTemp(accident_id, road_type) AS
+    (SELECT accident_id, road_type
+     FROM crash.accident AS A
+     WHERE A.temperature < 0
+    )
+SELECT Dt.accident_id, Dt.alcohol_level, MT.road_type
+FROM crash.details as Dt JOIN MyTemp as MT on (Dt.accident_id = MT.accident_id)
+WHERE Dt.is_exited_crash = True;
+
+-- 23. Инструкция SELECT, использующая рекурсивное обобщенное табличное выражение.
+
+-- Вывести пирамиду сотрудников
+
+DROP TABLE IF EXISTS crash.ex23
+CREATE TABLE crash.ex23
+(
+    EmployeeID int NOT NULL,
+    FirstName text NOT NULL,
+    LastName text NOT NULL,
+    Title text NOT NULL,
+    ManagerID int NULL,
+    CONSTRAINT PK_EmployeeID PRIMARY KEY (EmployeeID)
+)
+
+INSERT INTO crash.ex23
+VALUES (1, N'Леонид', N'Федун', N'Президент',NULL),
+(2, N'Дмитрий', N'Попов', N'Спортивный директор',1),
+(3, N'Нариман', N'Акавов', N'Главный скаут',2),
+(4, N'Александр', N'Прянишников', N'Аналитик',3),
+(5, N'Иван', N'Максимов', N'Скаут',4),
+(6, N'Шамиль', N'Газизов', N'Генеральный директор',1),
+(7, N'Станислав', N'Меркис', N'Менеджер по работе с общественностью',6),
+(8, N'Мария', N'Кудашкина', N'Главный бухгалтер',6)
+
+WITH RECURSIVE ANS (ManagerID, EmployeeID, Title, Level) AS
+(
+    SELECT ManagerID, EmployeeID, Title, 0 AS Level FROM crash.ex23
+    WHERE ManagerID IS NULL
+    UNION ALL
+    SELECT tb.ManagerID, tb.EmployeeID, tb.Title, d.Level + 1 FROM crash.ex23  AS tb INNER JOIN ANS AS d
+    ON tb.ManagerID = d.EmployeeID
+)
+SELECT ManagerID, EmployeeID, Title, Level FROM ANS;
+
+-- 24. Оконные функции. Использование конструкций MIN/MAX/AVG OVER()
+-- По каждой машине добавить минимальную, среднюю и максимальную цену модели
+SELECT C.car_number, C.car_type, C.car_model, C.price, MIN(C.price) OVER(PARTITION BY C.car_model) as MinPrice,
+                                MAX(C.price) OVER(PARTITION BY C.car_model) as MaxPrice,
+                                AVG(C.price) OVER(PARTITION BY C.car_model) as MinPrice
+FROM crash.car as C
+
+-- 25. Оконные фнкции для устранения дублей
+-- По каждой машине добавить минимальную цену модели
+SELECT row_number() over (PARTITION BY C.car_model) as num, C.car_model, MIN(C.price) OVER(PARTITION BY C.car_model) as MinPrice
+FROM crash.car as C
