@@ -1,0 +1,86 @@
+{"region_id":1,"name":"Адыгея","region_type":"Республика","full_name":"Республика Адыгея","federal_district":"Южный","timezone":3}
+{"region_id":2,"name":"Башкортостан","region_type":"Республика","full_name":"Республика Башкортостан","federal_district":"Приволжский","timezone":5}
+{"region_id":3,"name":"Бурятия","region_type":"Республика","full_name":"Республика Бурятия","federal_district":"Дальневосточный","timezone":8}
+{"region_id":4,"name":"Алтай","region_type":"Республика","full_name":"Республика Алтай","federal_district":"Сибирский","timezone":7}
+{"region_id":5,"name":"Дагестан","region_type":"Республика","full_name":"Республика Дагестан","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":6,"name":"Ингушетия","region_type":"Республика","full_name":"Республика Ингушетия","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":7,"name":"Кабардино-Балкарская","region_type":"Республика","full_name":"Республика Кабардино-Балкарская","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":8,"name":"Калмыкия","region_type":"Республика","full_name":"Республика Калмыкия","federal_district":"Южный","timezone":3}
+{"region_id":9,"name":"Карачаево-Черкесская","region_type":"Республика","full_name":"Республика Карачаево-Черкесская","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":10,"name":"Карелия","region_type":"Республика","full_name":"Республика Карелия","federal_district":"Северо-Западный","timezone":3}
+{"region_id":11,"name":"Коми","region_type":"Республика","full_name":"Республика Коми","federal_district":"Северо-Западный","timezone":3}
+{"region_id":12,"name":"Марий Эл","region_type":"Республика","full_name":"Республика Марий Эл","federal_district":"Приволжский","timezone":3}
+{"region_id":13,"name":"Мордовия","region_type":"Республика","full_name":"Республика Мордовия","federal_district":"Приволжский","timezone":3}
+{"region_id":14,"name":"Саха /Якутия/","region_type":"Республика","full_name":"Республика Саха /Якутия/","federal_district":"Дальневосточный","timezone":9}
+{"region_id":15,"name":"Северная Осетия - Алания","region_type":"Республика","full_name":"Республика Северная Осетия - Алания","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":16,"name":"Татарстан","region_type":"Республика","full_name":"Республика Татарстан","federal_district":"Приволжский","timezone":3}
+{"region_id":17,"name":"Тыва","region_type":"Республика","full_name":"Республика Тыва","federal_district":"Сибирский","timezone":7}
+{"region_id":18,"name":"Удмуртская","region_type":"Республика","full_name":"Республика Удмуртская","federal_district":"Приволжский","timezone":4}
+{"region_id":19,"name":"Хакасия","region_type":"Республика","full_name":"Республика Хакасия","federal_district":"Сибирский","timezone":7}
+{"region_id":20,"name":"Чеченская","region_type":"Республика","full_name":"Республика Чеченская","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":21,"name":"Чувашская Республика -","region_type":"Чувашия","full_name":"Чувашская Республикаублика - Чувашия","federal_district":"Приволжский","timezone":3}
+{"region_id":22,"name":"Алтайский","region_type":"край","full_name":"Алтайский край","federal_district":"Сибирский","timezone":7}
+{"region_id":23,"name":"Краснодарский","region_type":"край","full_name":"Краснодарский край","federal_district":"Южный","timezone":3}
+{"region_id":24,"name":"Красноярский","region_type":"край","full_name":"Красноярский край","federal_district":"Сибирский","timezone":7}
+{"region_id":25,"name":"Приморский","region_type":"край","full_name":"Приморский край","federal_district":"Дальневосточный","timezone":10}
+{"region_id":26,"name":"Ставропольский","region_type":"край","full_name":"Ставропольский край","federal_district":"Северо-Кавказский","timezone":3}
+{"region_id":27,"name":"Хабаровский","region_type":"край","full_name":"Хабаровский край","federal_district":"Дальневосточный","timezone":10}
+{"region_id":28,"name":"Амурская","region_type":"область","full_name":"Амурская область","federal_district":"Дальневосточный","timezone":9}
+{"region_id":29,"name":"Архангельская","region_type":"область","full_name":"Архангельская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":30,"name":"Астраханская","region_type":"область","full_name":"Астраханская область","federal_district":"Южный","timezone":4}
+{"region_id":31,"name":"Белгородская","region_type":"область","full_name":"Белгородская область","federal_district":"Центральный","timezone":3}
+{"region_id":32,"name":"Брянская","region_type":"область","full_name":"Брянская область","federal_district":"Центральный","timezone":3}
+{"region_id":33,"name":"Владимирская","region_type":"область","full_name":"Владимирская область","federal_district":"Центральный","timezone":3}
+{"region_id":34,"name":"Волгоградская","region_type":"область","full_name":"Волгоградская область","federal_district":"Южный","timezone":4}
+{"region_id":35,"name":"Вологодская","region_type":"область","full_name":"Вологодская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":36,"name":"Воронежская","region_type":"область","full_name":"Воронежская область","federal_district":"Центральный","timezone":3}
+{"region_id":37,"name":"Ивановская","region_type":"область","full_name":"Ивановская область","federal_district":"Центральный","timezone":3}
+{"region_id":38,"name":"Иркутская","region_type":"область","full_name":"Иркутская область","federal_district":"Сибирский","timezone":8}
+{"region_id":39,"name":"Калининградская","region_type":"область","full_name":"Калининградская область","federal_district":"Северо-Западный","timezone":2}
+{"region_id":40,"name":"Калужская","region_type":"область","full_name":"Калужская область","federal_district":"Центральный","timezone":3}
+{"region_id":41,"name":"Камчатский","region_type":"край","full_name":"Камчатский край","federal_district":"Дальневосточный","timezone":12}
+{"region_id":42,"name":"Кемеровская область - Кузбасс","region_type":"область","full_name":"Кемеровская областьасть - Кузбасс","federal_district":"Сибирский","timezone":7}
+{"region_id":43,"name":"Кировская","region_type":"область","full_name":"Кировская область","federal_district":"Приволжский","timezone":3}
+{"region_id":44,"name":"Костромская","region_type":"область","full_name":"Костромская область","federal_district":"Центральный","timezone":3}
+{"region_id":45,"name":"Курганская","region_type":"область","full_name":"Курганская область","federal_district":"Уральский","timezone":5}
+{"region_id":46,"name":"Курская","region_type":"область","full_name":"Курская область","federal_district":"Центральный","timezone":3}
+{"region_id":47,"name":"Ленинградская","region_type":"область","full_name":"Ленинградская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":48,"name":"Липецкая","region_type":"область","full_name":"Липецкая область","federal_district":"Центральный","timezone":3}
+{"region_id":49,"name":"Магаданская","region_type":"область","full_name":"Магаданская область","federal_district":"Дальневосточный","timezone":11}
+{"region_id":50,"name":"Московская","region_type":"область","full_name":"Московская область","federal_district":"Центральный","timezone":3}
+{"region_id":51,"name":"Мурманская","region_type":"область","full_name":"Мурманская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":52,"name":"Нижегородская","region_type":"область","full_name":"Нижегородская область","federal_district":"Приволжский","timezone":3}
+{"region_id":53,"name":"Новгородская","region_type":"область","full_name":"Новгородская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":54,"name":"Новосибирская","region_type":"область","full_name":"Новосибирская область","federal_district":"Сибирский","timezone":7}
+{"region_id":55,"name":"Омская","region_type":"область","full_name":"Омская область","federal_district":"Сибирский","timezone":6}
+{"region_id":56,"name":"Оренбургская","region_type":"область","full_name":"Оренбургская область","federal_district":"Приволжский","timezone":5}
+{"region_id":57,"name":"Орловская","region_type":"область","full_name":"Орловская область","federal_district":"Центральный","timezone":3}
+{"region_id":58,"name":"Пензенская","region_type":"область","full_name":"Пензенская область","federal_district":"Приволжский","timezone":3}
+{"region_id":59,"name":"Пермский","region_type":"край","full_name":"Пермский край","federal_district":"Приволжский","timezone":5}
+{"region_id":60,"name":"Псковская","region_type":"область","full_name":"Псковская область","federal_district":"Северо-Западный","timezone":3}
+{"region_id":61,"name":"Ростовская","region_type":"область","full_name":"Ростовская область","federal_district":"Южный","timezone":3}
+{"region_id":62,"name":"Рязанская","region_type":"область","full_name":"Рязанская область","federal_district":"Центральный","timezone":3}
+{"region_id":63,"name":"Самарская","region_type":"область","full_name":"Самарская область","federal_district":"Приволжский","timezone":4}
+{"region_id":64,"name":"Саратовская","region_type":"область","full_name":"Саратовская область","federal_district":"Приволжский","timezone":4}
+{"region_id":65,"name":"Сахалинская","region_type":"область","full_name":"Сахалинская область","federal_district":"Дальневосточный","timezone":11}
+{"region_id":66,"name":"Свердловская","region_type":"область","full_name":"Свердловская область","federal_district":"Уральский","timezone":5}
+{"region_id":67,"name":"Смоленская","region_type":"область","full_name":"Смоленская область","federal_district":"Центральный","timezone":3}
+{"region_id":68,"name":"Тамбовская","region_type":"область","full_name":"Тамбовская область","federal_district":"Центральный","timezone":3}
+{"region_id":69,"name":"Тверская","region_type":"область","full_name":"Тверская область","federal_district":"Центральный","timezone":3}
+{"region_id":70,"name":"Томская","region_type":"область","full_name":"Томская область","federal_district":"Сибирский","timezone":7}
+{"region_id":71,"name":"Тульская","region_type":"область","full_name":"Тульская область","federal_district":"Центральный","timezone":3}
+{"region_id":72,"name":"Тюменская","region_type":"область","full_name":"Тюменская область","federal_district":"Уральский","timezone":5}
+{"region_id":73,"name":"Ульяновская","region_type":"область","full_name":"Ульяновская область","federal_district":"Приволжский","timezone":4}
+{"region_id":74,"name":"Челябинская","region_type":"область","full_name":"Челябинская область","federal_district":"Уральский","timezone":5}
+{"region_id":75,"name":"Забайкальский","region_type":"край","full_name":"Забайкальский край","federal_district":"Дальневосточный","timezone":9}
+{"region_id":76,"name":"Ярославская","region_type":"область","full_name":"Ярославская область","federal_district":"Центральный","timezone":3}
+{"region_id":77,"name":"Москва","region_type":"г","full_name":"Москва","federal_district":"Центральный","timezone":3}
+{"region_id":78,"name":"Санкт-Петербург","region_type":"г","full_name":"Санкт-Петербург","federal_district":"Северо-Западный","timezone":3}
+{"region_id":83,"name":"Ненецкий","region_type":"АО","full_name":"Ненецкий АО","federal_district":"Северо-Западный","timezone":3}
+{"region_id":86,"name":"Ханты-Мансийский Автономный округ - Югра","region_type":"АО","full_name":"Ханты-Мансийский Автономный окру- Югра","federal_district":"Уральский","timezone":5}
+{"region_id":87,"name":"Чукотский","region_type":"АО","full_name":"Чукотский АО","federal_district":"Дальневосточный","timezone":12}
+{"region_id":89,"name":"Ямало-Ненецкий","region_type":"АО","full_name":"Ямало-Ненецкий АО","federal_district":"Уральский","timezone":5}
+{"region_id":91,"name":"Крым","region_type":"Республика","full_name":"Республика Крым","federal_district":"Южный","timezone":3}
+{"region_id":92,"name":"Севастополь","region_type":"г","full_name":"Севастополь","federal_district":"Южный","timezone":3}
+{"region_id":99,"name":"Байконур","region_type":"г","full_name":"Байконур","federal_district":null,"timezone":6}
+{"region_id":79,"name":"Еврейская","region_type":"Аобласть","full_name":"Еврейская АО","federal_district":"Дальневосточный","timezone":10}
